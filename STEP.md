@@ -22,7 +22,7 @@
   - [ ] Spring Boot 버전 확인(4 사용 가능 여부, 필요 시 3.x로 시작 후 업그레이드)
   - [ ] Gradle Wrapper/테스트 실행 확인
 - [ ] 공통 패키지 구조 설계 (`domain`, `service`, `api`, `infra`, `testsupport`)
-- [ ] `README.md`에 실험 목표/실행 방법 추가
+- [x] `README.md`에 실험 목표/실행 방법 추가
 
 ## Step 1. 버전 비교 정리 (선행)
 - [x] `docs/step-01-version-comparison.md` 작성
