@@ -23,6 +23,7 @@
   - [ ] Gradle Wrapper/테스트 실행 확인
 - [ ] 공통 패키지 구조 설계 (`domain`, `service`, `api`, `infra`, `testsupport`)
 - [x] `README.md`에 실험 목표/실행 방법 추가
+- [x] Docker Compose 인프라 문서화 (`docs/infra/docker-compose-guide.md`)
 
 ## Step 1. 버전 비교 정리 (선행)
 - [x] `docs/step-01-version-comparison.md` 작성

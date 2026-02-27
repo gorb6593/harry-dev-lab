@@ -24,28 +24,64 @@
 ./gradlew bootRun
 ```
 
-기본 주소: `http://localhost:8080`
+기본 주소: `http://localhost:25000`
+
+## Docker Compose (MySQL/Redis)
+로컬 인프라(MySQL/Redis) 실행은 아래 가이드를 기준으로 진행합니다.
+
+- [docker-compose-guide.md](/Users/kiwoong/Downloads/rab/docs/infra/docker-compose-guide.md)
+- `docker compose up -d mysql` 명령 해석, PC별 유의사항, 금지사항도 위 가이드에 정리되어 있습니다.
+
+빠른 시작:
+```bash
+docker compose up -d mysql
+```
+
+Redis까지 같이 실행:
+```bash
+docker compose --profile redis up -d
+```
+
+애플리케이션 실행:
+```bash
+./gradlew bootRun
+```
+
+## 실행 순서 (팀 공통)
+1. MySQL 실행
+```bash
+docker compose up -d mysql
+docker compose ps
+```
+2. 앱 실행
+```bash
+./gradlew bootRun
+```
+3. 앱 헬스 체크 대신 API 확인
+```bash
+curl http://localhost:25000/api/concurrency/unsafe/1
+```
 
 ## Step 2 API (Unsafe)
 현재는 인메모리 기반 `UnsafeStockService`로 동시성 문제를 의도적으로 노출합니다.
 
 1. 재고 초기화
 ```bash
-curl -X POST http://localhost:8080/api/concurrency/unsafe/init \
+curl -X POST http://localhost:25000/api/concurrency/unsafe/init \
   -H 'Content-Type: application/json' \
   -d '{"productId":1,"quantity":100}'
 ```
 
 2. 재고 1 감소
 ```bash
-curl -X POST http://localhost:8080/api/concurrency/unsafe/decrease \
+curl -X POST http://localhost:25000/api/concurrency/unsafe/decrease \
   -H 'Content-Type: application/json' \
   -d '{"productId":1,"quantity":1}'
 ```
 
 3. 현재 재고 조회
 ```bash
-curl http://localhost:8080/api/concurrency/unsafe/1
+curl http://localhost:25000/api/concurrency/unsafe/1
 ```
 
 ## Why In-memory First?

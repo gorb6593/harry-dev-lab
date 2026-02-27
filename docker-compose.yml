@@ -1,0 +1,35 @@
+services:
+  mysql:
+    image: mysql:9.6.0
+    restart: unless-stopped
+    command: ["mysqld", "--default-time-zone=+09:00"]
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: rab
+      MYSQL_USER: rab
+      MYSQL_PASSWORD: rab1234
+      TZ: Asia/Seoul
+    ports:
+      - "13306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -proot1234 --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    profiles:
+      - redis
+
+volumes:
+  mysql_data:
+  redis_data:

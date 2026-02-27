@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: rab
+
+  datasource:
+    url: jdbc:mysql://localhost:13306/rab?useSSL=false&allowPublicKeyRetrieval=true&connectionTimeZone=Asia/Seoul&forceConnectionTimeZoneToSession=true
+    username: rab
+    password: rab1234
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+server:
+  port: 25000
