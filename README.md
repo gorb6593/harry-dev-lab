@@ -15,6 +15,10 @@
 ## Project Documents
 - [STEP.md](/Users/kiwoong/Downloads/rab/STEP.md): 단계별 실행 계획
 - [PROJECT_RULES.md](/Users/kiwoong/Downloads/rab/PROJECT_RULES.md): 실전형 개발/검증 규칙
+- [JPA_SCHEDULE.md](/Users/kiwoong/Downloads/rab/docs/jpa/JPA_SCHEDULE.md): JPA 학습 일정
+- [JPA_RULES.md](/Users/kiwoong/Downloads/rab/docs/jpa/JPA_RULES.md): JPA 구현 규칙
+- [stage-00-preparation.md](/Users/kiwoong/Downloads/rab/docs/jpa/stages/stage-00-preparation.md): JPA 준비 단계
+- [stage-01-persistence-context.md](/Users/kiwoong/Downloads/rab/docs/jpa/stages/stage-01-persistence-context.md): 영속성 컨텍스트 학습
 - [step-01-version-comparison.md](/Users/kiwoong/Downloads/rab/docs/step-01-version-comparison.md): Java/Spring 버전 비교
 - [step-01-java-spring-version-comparison-draft.md](/Users/kiwoong/Downloads/rab/docs/blog/step-01-java-spring-version-comparison-draft.md): 블로그 초안
 - [concurrency-01.md](/Users/kiwoong/Downloads/rab/docs/concurrency-01.md): Step 2 동시성 재현 문서

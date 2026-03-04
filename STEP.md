@@ -8,6 +8,7 @@
 
 ## 필수 참조
 - 프로젝트 진행 전/중/후 항상 [PROJECT_RULES.md](./PROJECT_RULES.md)를 확인한다.
+- JPA를 진행할 때는 항상 [docs/jpa/JPA_RULES.md](./docs/jpa/JPA_RULES.md)와 [docs/jpa/JPA_SCHEDULE.md](./docs/jpa/JPA_SCHEDULE.md)를 먼저 확인한다.
 
 ## 진행 원칙
 - 매 단계마다 `문제 상황 -> 재현 코드 -> 실패 테스트 -> 해결 코드 -> 통과 테스트 -> 회고` 순서로 진행
@@ -60,6 +61,8 @@
   - [ ] 처리량 저하 가능성
 
 ## Step 4. 해결책 2 - DB 레벨 제어
+- [ ] JPA 선행 학습 일정 확인 (`docs/jpa/JPA_SCHEDULE.md`)
+- [ ] JPA 구현 규칙 확인 (`docs/jpa/JPA_RULES.md`)
 - [ ] 낙관적 락(`@Version`) 적용
 - [ ] 비관적 락(`PESSIMISTIC_WRITE`) 비교
 - [ ] 재시도 로직 적용 여부 실험
