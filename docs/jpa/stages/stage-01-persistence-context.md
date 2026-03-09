@@ -28,6 +28,31 @@
 3. 생성/조회 SQL 로그 확인
 4. 그 다음 같은 트랜잭션에서 두 번 조회하는 코드를 직접 추가해 1차 캐시를 관찰
 
+## 바로 실행할 API
+### 1. 상품 생성
+```bash
+curl -X POST http://localhost:25000/api/jpa/products \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"JPA Book","price":30000}'
+```
+
+### 2. 상품 단건 조회
+```bash
+curl http://localhost:25000/api/jpa/products/1
+```
+
+### 3. 같은 트랜잭션 내 1차 캐시 확인
+```bash
+curl http://localhost:25000/api/jpa/products/1/persistence-context
+```
+
+### 4. 변경 감지와 flush 확인
+```bash
+curl -X PATCH http://localhost:25000/api/jpa/products/1/price \
+  -H 'Content-Type: application/json' \
+  -d '{"price":35000}'
+```
+
 ## 기록해야 할 것
 ### 개념 요약
 

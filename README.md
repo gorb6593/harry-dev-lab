@@ -16,6 +16,7 @@
 - [STEP.md](/Users/kiwoong/Downloads/rab/STEP.md): 단계별 실행 계획
 - [PROJECT_RULES.md](/Users/kiwoong/Downloads/rab/PROJECT_RULES.md): 실전형 개발/검증 규칙
 - [JPA_SCHEDULE.md](/Users/kiwoong/Downloads/rab/docs/jpa/JPA_SCHEDULE.md): JPA 학습 일정
+- [JPA_TO_QUERYDSL_PLAN.md](/Users/kiwoong/Downloads/rab/docs/jpa/JPA_TO_QUERYDSL_PLAN.md): JPA부터 Querydsl까지 전체 학습 로드맵
 - [JPA_RULES.md](/Users/kiwoong/Downloads/rab/docs/jpa/JPA_RULES.md): JPA 구현 규칙
 - [stage-00-preparation.md](/Users/kiwoong/Downloads/rab/docs/jpa/stages/stage-00-preparation.md): JPA 준비 단계
 - [stage-01-persistence-context.md](/Users/kiwoong/Downloads/rab/docs/jpa/stages/stage-01-persistence-context.md): 영속성 컨텍스트 학습
@@ -86,6 +87,31 @@ curl -X POST http://localhost:25000/api/concurrency/unsafe/decrease \
 3. 현재 재고 조회
 ```bash
 curl http://localhost:25000/api/concurrency/unsafe/1
+```
+
+## JPA Learning API
+1. 상품 생성
+```bash
+curl -X POST http://localhost:25000/api/jpa/products \
+  -H 'Content-Type: application/json' \
+  -d '{"name":"JPA Book","price":30000}'
+```
+
+2. 상품 조회
+```bash
+curl http://localhost:25000/api/jpa/products/1
+```
+
+3. 영속성 컨텍스트 확인
+```bash
+curl http://localhost:25000/api/jpa/products/1/persistence-context
+```
+
+4. 변경 감지 확인
+```bash
+curl -X PATCH http://localhost:25000/api/jpa/products/1/price \
+  -H 'Content-Type: application/json' \
+  -d '{"price":35000}'
 ```
 
 ## Why In-memory First?
