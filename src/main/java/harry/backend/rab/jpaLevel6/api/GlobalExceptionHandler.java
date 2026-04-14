@@ -1,6 +1,7 @@
 package harry.backend.rab.jpaLevel6.api;
 
 import harry.backend.rab.jpaLevel6.exception.PostNotFoundException;
+import harry.backend.rab.jpaLevel7.exception.StockConflictException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,5 +14,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handlePostNotFound(PostNotFoundException exception) {
         ErrorResponse response = new ErrorResponse("POST_NOT_FOUND", exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(StockConflictException.class)
+    public ResponseEntity<ErrorResponse> handleStockConflict(StockConflictException exception) {
+        ErrorResponse response = new ErrorResponse("STOCK_CONFLICT", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 }

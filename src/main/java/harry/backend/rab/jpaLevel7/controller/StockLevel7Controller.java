@@ -1,6 +1,7 @@
 package harry.backend.rab.jpaLevel7.controller;
 
 import harry.backend.rab.jpaLevel7.dto.ConcurrencyObservationResponse;
+import harry.backend.rab.jpaLevel7.dto.OptimisticLockResponse;
 import harry.backend.rab.jpaLevel7.dto.StockCreateRequest;
 import harry.backend.rab.jpaLevel7.dto.StockDecreaseRequest;
 import harry.backend.rab.jpaLevel7.dto.StockDecreaseWithDelayRequest;
@@ -49,5 +50,13 @@ public class StockLevel7Controller {
             @RequestBody StockDecreaseWithDelayRequest request
     ) {
         return stockLevel7Service.decreaseWithDelay(stockItemId, request);
+    }
+
+    @PatchMapping("/{stockItemId}/decreaseWithOptimisticLock")
+    public OptimisticLockResponse decreaseWithOptimisticLock(
+            @PathVariable Long stockItemId,
+            @RequestBody StockDecreaseWithDelayRequest request
+    ) {
+        return stockLevel7Service.decreaseWithOptimisticLock(stockItemId, request);
     }
 }

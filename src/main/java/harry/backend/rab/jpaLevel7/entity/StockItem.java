@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 
 @Entity
 @Table(name = "jpa_level7_stock_items")
@@ -20,6 +21,9 @@ public class StockItem {
 
     @Column(nullable = false)
     private int quantity;
+
+    @Version
+    private Long version;
 
     protected StockItem() {
     }
@@ -55,6 +59,10 @@ public class StockItem {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public Long getVersion() {
+        return version;
     }
 
     private static void validateName(String name) {

@@ -1,13 +1,17 @@
 package harry.backend.rab.jpaLevel7.service;
 
 import harry.backend.rab.jpaLevel7.dto.ConcurrencyObservationResponse;
+import harry.backend.rab.jpaLevel7.dto.OptimisticLockResponse;
 import harry.backend.rab.jpaLevel7.dto.StockCreateRequest;
 import harry.backend.rab.jpaLevel7.dto.StockDecreaseRequest;
 import harry.backend.rab.jpaLevel7.dto.StockDecreaseWithDelayRequest;
 import harry.backend.rab.jpaLevel7.dto.StockResponse;
 import harry.backend.rab.jpaLevel7.entity.StockItem;
+import harry.backend.rab.jpaLevel7.exception.StockConflictException;
 import harry.backend.rab.jpaLevel7.repository.StockItemRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class StockLevel7Service {
 
     private final StockItemRepository stockItemRepository;
+    private final EntityManager entityManager;
 
     public StockResponse create(StockCreateRequest request) {
         StockItem stockItem = StockItem.create(request.name(), request.quantity());
@@ -66,6 +71,34 @@ public class StockLevel7Service {
                 "두 요청이 같은 시점의 수량을 먼저 읽고 각각 대기한 뒤 수정하면, 둘 다 같은 beforeQuantity를 기준으로 계산할 수 있다. 이 상태에서 마지막 커밋이 앞선 커밋을 덮어써 lost update가 더 쉽게 드러난다.",
                 "다음 질문: 이 충돌을 막으려면 낙관적 락과 비관적 락 중 어떤 전략이 필요한가?"
         );
+    }
+
+    public OptimisticLockResponse decreaseWithOptimisticLock(Long stockItemId, StockDecreaseWithDelayRequest request) {
+        try {
+            StockItem stockItem = stockItemRepository.findById(stockItemId)
+                    .orElseThrow(() -> new IllegalArgumentException("Stock item not found. id=" + stockItemId));
+
+            Long versionBeforeUpdate = stockItem.getVersion();
+            int beforeQuantity = stockItem.getQuantity();
+
+            sleep(request.delayMillis());
+            stockItem.decrease(request.quantity());
+            entityManager.flush();
+
+            return new OptimisticLockResponse(
+                    "낙관적 락은 왜 lost update를 막을 수 있는가?",
+                    stockItemId,
+                    versionBeforeUpdate,
+                    beforeQuantity,
+                    request.quantity(),
+                    stockItem.getQuantity(),
+                    stockItem.getVersion(),
+                    "@Version 컬럼은 update 시점에 where 절에 함께 사용된다. 먼저 커밋한 트랜잭션이 version을 증가시키면, 뒤늦게 flush하는 트랜잭션은 update 대상 row 수가 0건이 되어 충돌로 실패한다.",
+                    "다음 질문: 충돌이 났을 때 낙관적 락 실패를 어떻게 재시도하거나 사용자에게 안내할 것인가?"
+            );
+        } catch (ObjectOptimisticLockingFailureException exception) {
+            throw new StockConflictException(stockItemId);
+        }
     }
 
     private void sleep(long delayMillis) {
