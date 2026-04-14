@@ -26,11 +26,7 @@ public class PostController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(postService.getPost(id));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(postService.getPost(id));
     }
 
     @PostMapping
@@ -41,11 +37,7 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PostResponse> updatePost(@PathVariable Long id, @RequestBody PostRequest request) {
-        try {
-            return ResponseEntity.ok(postService.updatePost(id, request));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(postService.updatePost(id, request));
     }
 
     @DeleteMapping("/{id}")

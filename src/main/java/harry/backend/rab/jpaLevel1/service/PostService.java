@@ -6,6 +6,7 @@ import harry.backend.rab.jpaLevel1.dto.PostSaveFlowRequest;
 import harry.backend.rab.jpaLevel1.dto.PostSaveFlowResponse;
 import harry.backend.rab.jpaLevel1.entity.Post;
 import harry.backend.rab.jpaLevel1.repository.PostRepository;
+import harry.backend.rab.jpaLevel6.exception.PostNotFoundException;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class PostService {
     public PostResponse getPost(Long id) {
         return postRepository.findById(id)
                 .map(PostResponse::from)
-                .orElseThrow(() -> new RuntimeException("Post not found: " + id));
+                .orElseThrow(() -> new PostNotFoundException(id));
     }
 
     public PostResponse createPost(PostRequest request) {
@@ -70,7 +71,7 @@ public class PostService {
                     post.update(request.title(), request.content());
                     return PostResponse.from(post);
                 })
-                .orElseThrow(() -> new RuntimeException("Post not found: " + id));
+                .orElseThrow(() -> new PostNotFoundException(id));
     }
 
     public void deletePost(Long id) {
