@@ -14,7 +14,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        highlight_sql: true
+        query:
+          translator: com.querydsl.jpa.impl.JPAQueryTranslator
     show-sql: true
+    defer-datasource-initialization: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
 
 server:
   port: 25000
