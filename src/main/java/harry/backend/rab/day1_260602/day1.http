@@ -1,0 +1,70 @@
+### 상품 등록
+POST http://localhost:25000/api/day1/products
+Content-Type: application/json
+
+{
+  "name": "Mechanical Keyboard",
+  "price": 120000,
+  "stockQuantity": 10
+}
+
+> {%
+  client.global.set("productId", response.body.id);
+%}
+
+### 상품 조회: 초기 재고 확인
+GET http://localhost:25000/api/day1/products/{{productId}}
+
+### 주문 생성: 재고 3개 차감
+POST http://localhost:25000/api/day1/orders
+Content-Type: application/json
+
+{
+  "productId": {{productId}},
+  "quantity": 3
+}
+
+> {%
+  client.global.set("orderId", response.body.id);
+%}
+
+### 상품 조회: 재고가 7개인지 확인
+GET http://localhost:25000/api/day1/products/{{productId}}
+
+### 주문 조회: 주문 금액이 360000인지 확인
+GET http://localhost:25000/api/day1/orders/{{orderId}}
+
+### 재고를 초과한 주문: 409 응답 확인
+POST http://localhost:25000/api/day1/orders
+Content-Type: application/json
+
+{
+  "productId": {{productId}},
+  "quantity": 100
+}
+
+### 주문 취소: 재고 복구
+POST http://localhost:25000/api/day1/orders/{{orderId}}/cancel
+
+### 상품 조회: 재고가 다시 10개인지 확인
+GET http://localhost:25000/api/day1/products/{{productId}}
+
+### 동일 주문 다시 취소: 409 응답 확인
+POST http://localhost:25000/api/day1/orders/{{orderId}}/cancel
+
+### 잘못된 상품 등록: 400 응답 확인
+POST http://localhost:25000/api/day1/products
+Content-Type: application/json
+
+{
+  "name": " ",
+  "price": 0,
+  "stockQuantity": -1
+}
+
+### 존재하지 않는 상품 조회: 404 응답 확인
+GET http://localhost:25000/api/day1/products/999999
+
+### 존재하지 않는 주문 조회: 404 응답 확인
+GET http://localhost:25000/api/day1/orders/999999
+
