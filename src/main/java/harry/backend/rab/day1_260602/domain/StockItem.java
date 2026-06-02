@@ -35,7 +35,7 @@ public class StockItem {
 			throw new IllegalArgumentException("차감 수량은 1 이상이어야 합니다.");
 		}
 		if (quantity < requestedQuantity) {
-			throw new IllegalStateException("재고가 부족합니다.");
+			throw new InsufficientStockException();
 		}
 		quantity -= requestedQuantity;
 	}

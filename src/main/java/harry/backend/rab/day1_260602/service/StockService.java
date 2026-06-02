@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import harry.backend.rab.day1_260602.domain.StockItem;
 import harry.backend.rab.day1_260602.repository.StockItemRepository;
+import harry.backend.rab.day1_260602.service.command.StockCreateCommand;
 
 @Service
 public class StockService {
@@ -18,8 +19,8 @@ public class StockService {
 	}
 
 	@Transactional
-	public StockItem create(String name, int quantity) {
-		return stockItemRepository.save(new StockItem(name, quantity));
+	public StockItem create(StockCreateCommand command) {
+		return stockItemRepository.save(new StockItem(command.name(), command.quantity()));
 	}
 
 	@Transactional(readOnly = true)
