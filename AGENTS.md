@@ -142,13 +142,13 @@
 
 ### 현재 과제
 
-- Day 1 (`day1_260602`): 재고 차감 동시성 문제 진단과 해결
-- 과제 문서: `src/main/java/harry/backend/rab/day1_260602/README.md`
-- 상태: 비관적 락 기준 구현 완료, 리뷰 및 질의응답 가능
+- Day 2 (`day2_260604`): Spring Bean, 의존성 주입, 프록시
+- 과제 문서: `src/main/java/harry/backend/rab/day2_260604/README.md`
+- 상태: 기본 코드 제공, 분석 및 질의응답 가능
 
 ### 완료한 과제
 
-- 없음
+- Day 1 (`day1_260602`): 재고 차감 동시성 문제 진단과 해결
 
 ## 첫 과제 시작 규칙
 

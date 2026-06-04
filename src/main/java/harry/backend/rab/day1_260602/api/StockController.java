@@ -2,6 +2,7 @@ package harry.backend.rab.day1_260602.api;
 
 import java.net.URI;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,15 +18,12 @@ import harry.backend.rab.day1_260602.service.command.StockCreateCommand;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/day1/stocks")
 public class StockController {
 
 	private final StockService stockService;
-
-	public StockController(StockService stockService) {
-		this.stockService = stockService;
-	}
 
 	@PostMapping
 	public ResponseEntity<StockItemResponse> create(@Valid @RequestBody StockCreateRequest request) {
