@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -43,8 +42,7 @@ public class ChatMessage {
 	@JoinColumn(name = "sender_id", nullable = false)
 	private ChatUser sender;
 
-	@Lob
-	@Column(nullable = false)
+	@Column(nullable = false, length = 4000)
 	private String content;
 
 	@Column(nullable = false, updatable = false)

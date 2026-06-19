@@ -32,7 +32,8 @@
   - [x] 실시간: STOMP `/app/rooms/{id}/send` → `/topic/rooms/{id}` 브로드캐스트
   - [x] 웹 클라이언트: `/chat.html` (SockJS+STOMP)
   - [x] N+1 회피: 히스토리 조회 시 sender fetch join
-- [ ] **1.5단계 — 다듬기**: 인증/로그인, 읽음 처리(lastReadMessageId)와 안읽음 개수, 접속 상태(presence), 입력 중 표시, 메시지 검증/에러 응답 정리
+- [x] **기초 설계 고정**: 코딩 규칙 문서화(CONVENTIONS.md), ProblemDetail(RFC7807) 에러 표준, LOB 제거·텍스트블록 적용 — 검증 완료
+- [ ] **1.5단계 — 다듬기**: 인증/로그인, 읽음 처리(lastReadMessageId)와 안읽음 개수, 접속 상태(presence), 입력 중 표시, 캐치업 동기화(afterId)
 - [ ] **2단계 — 미디어 첨부**: 이미지/동영상 파일 업로드 → 저장소(MinIO) → URL 공유
 - [ ] **3단계 — 트래픽·스케일링**: 부하 테스트로 한 대 한계 측정 → Redis 릴레이로 수평 확장
 - [ ] (선택) **4단계 — 실시간 화상통화 (WebRTC)**
@@ -52,6 +53,11 @@
 
 확장 포인트: 지금은 in-memory 심플 브로커라 단일 서버. 1만 동접/다중 서버 단계(3단계)에서
 `enableStompBrokerRelay` + Redis/RabbitMQ로 교체하면 서버 간 메시지가 공유된다.
+
+## 코딩 규칙
+
+이 프로젝트의 설계·코딩 표준은 [`CONVENTIONS.md`](CONVENTIONS.md)에 정리. (record DTO, 엔티티 setter 금지,
+생성자 주입, ProblemDetail 에러, fetch join, 커서 페이징 등) 새 코드와 리뷰는 이 문서를 기준으로 한다.
 
 ## 진행 원칙 (멘토 방식)
 
