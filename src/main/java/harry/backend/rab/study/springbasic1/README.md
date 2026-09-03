@@ -13,6 +13,8 @@
 - `@Service`: 비즈니스 로직을 담당하는 클래스
 - 생성자 주입: Controller가 Service를 전달받는 방식
 
+추가로 `@RestController`와 일반 `@Controller`의 반환 방식 차이도 비교한다.
+
 ## 실행
 
 프로젝트 루트에서 실행한다.
@@ -35,6 +37,81 @@ curl http://localhost:25000/study/spring-basic1/greetings/harry
 ```text
 안녕하세요, harry님
 ```
+
+## `@RestController`란?
+
+`@RestController`는 다음 두 기능을 합친 어노테이션이다.
+
+```java
+@Controller
+@ResponseBody
+```
+
+따라서 아래 메서드의 반환값은 View 이름이 아니라 HTTP 응답 Body가 된다.
+
+```java
+@RestController
+public class SimpleGreetingController {
+
+    @GetMapping("/greetings/{name}")
+    public String getGreeting(@PathVariable String name) {
+        return "안녕하세요, " + name + "님";
+    }
+}
+```
+
+## `@Controller`만 사용하면 어떻게 될까?
+
+일반 `@Controller`에서 문자열을 반환하면 Spring MVC는 그 문자열을 View 이름으로 해석한다.
+
+```java
+@Controller
+public class SimpleController {
+
+    @GetMapping("/view")
+    public String view() {
+        return "hello";
+    }
+}
+```
+
+위 코드는 다음 화면을 찾으려고 한다.
+
+```text
+src/main/resources/templates/hello.html
+```
+
+화면 파일이 없으면 View를 찾지 못해 오류가 발생한다.
+
+일반 `@Controller`에서 문자열을 응답 Body로 보내고 싶다면 `@ResponseBody`를 추가한다.
+
+```java
+@Controller
+public class SimpleController {
+
+    @ResponseBody
+    @GetMapping("/body")
+    public String body() {
+        return "응답 Body입니다.";
+    }
+}
+```
+
+터미널에서 확인한다.
+
+```bash
+curl -i http://localhost:25000/study/spring-basic1/controller/body
+```
+
+정리하면 다음과 같다.
+
+| Controller 종류 | 반환값 처리 | 주 사용 목적 |
+|---|---|---|
+| `@Controller` | View 이름 | 서버 사이드 HTML |
+| `@Controller` + `@ResponseBody` | 응답 Body | REST 응답 |
+| `@RestController` | 응답 Body | REST API |
+
+`@RestController`는 `@ResponseBody`가 모든 메서드에 적용된 것과 같은 효과가 있다.
 
 ## GET 요청
 
@@ -142,6 +219,72 @@ public class SimpleGreetingService {
 6. Service가 인사말 반환
 7. Controller가 응답 반환
 ```
+
+## 기초에서 고급으로 나눌 학습 순서
+
+한 단계에서 모든 기능을 배우지 않고, 아래처럼 나누어 진행한다.
+
+### Spring Basic 1: HTTP와 Controller 기초
+
+- 어노테이션이란 무엇인가
+- `@Controller`와 `@RestController`
+- GET과 POST
+- `@PathVariable`과 `@RequestParam`
+- Controller와 Service 역할
+- 생성자 주입
+
+### Spring Basic 2: 요청과 응답 데이터
+
+- `@RequestBody`
+- DTO
+- JSON과 `HttpMessageConverter`
+- `@ResponseBody`
+- `ResponseEntity`
+- HTTP 상태 코드
+
+### Spring Basic 3: 검증과 예외 처리
+
+- `@Valid`
+- `@NotBlank`, `@Email` 등 Bean Validation
+- `@ExceptionHandler`
+- `@RestControllerAdvice`
+- 일관된 오류 응답
+
+### Spring Intermediate 1: Bean과 의존성 주입
+
+- IoC와 DI
+- Component Scan
+- Bean 생성 과정
+- `@Component`, `@Service`, `@Repository`
+- `@Configuration`, `@Bean`
+- Bean Scope와 생명주기
+
+### Spring Intermediate 2: Filter, Interceptor, AOP
+
+- Servlet Filter
+- HandlerInterceptor
+- Spring AOP Proxy
+- 실행 순서 비교
+- 공통 로깅과 인증 처리
+
+### Spring Advanced 1: 데이터베이스와 트랜잭션
+
+- JPA Entity
+- 영속성 컨텍스트
+- `@Transactional`
+- 변경 감지
+- 지연 로딩
+- N+1 문제
+
+### Spring Advanced 2: 실무 운영
+
+- Spring Security
+- 세션과 JWT
+- 테스트 전략
+- 로그와 Trace ID
+- 캐시
+- 동시성
+- 성능과 장애 대응
 
 ## 이번 단계에서 아직 사용하지 않는 것
 

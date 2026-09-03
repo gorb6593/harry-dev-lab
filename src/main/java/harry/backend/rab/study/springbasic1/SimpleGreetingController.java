@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-// @RestController: 이 클래스를 HTTP 요청을 처리하는 Controller로 등록한다.
-// 메서드가 반환한 값을 HTML 화면이 아니라 응답 Body로 바로 보낸다.
+// @RestController: @Controller와 @ResponseBody를 합친 역할이다.
+// 메서드 반환값을 HTML View가 아니라 HTTP 응답 Body로 바로 보낸다.
 @RestController
 // Controller가 처리할 URL의 공통 앞부분이다.
 @RequestMapping("/study/spring-basic1")
