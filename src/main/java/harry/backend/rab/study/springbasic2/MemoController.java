@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 // @RestController: 반환값을 화면 이름이 아니라 HTTP 응답 Body로 보낸다.
-@RestController
+@RestController("springBasic2MemoController")
 // 이 Controller의 모든 URL 앞에 붙는 공통 경로다.
 @RequestMapping("/study/spring-basic2/memos")
 public class MemoController {

@@ -20,6 +20,11 @@ spring:
     show-sql: true
     defer-datasource-initialization: true
 
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/springbasic4-schema.sql,classpath:db/springbasic5-schema.sql
+
 logging:
   level:
     org.hibernate.SQL: debug

@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 // @Service: 메모를 저장하고 조회하는 기능을 담당하는 Bean이다.
-@Service
+@Service("springBasic2MemoService")
 public class MemoService {
 
     private final AtomicLong idGenerator = new AtomicLong(1);

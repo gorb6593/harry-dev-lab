@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.util.List;
 
-// 이번 단계의 핵심:
-//  1. 요청 데이터를 JSON Body(@RequestBody + DTO)로 받는다.
-//  2. 응답을 ResponseEntity로 감싸 HTTP 상태 코드와 헤더를 직접 정한다.
-//  3. 조회는 GET, 상태 변경은 전부 POST로 처리한다(POST-only 방식).
-// Bean 이름을 명시한다. 기본 이름은 클래스명(memoController)인데 springbasic2에도 같은 클래스명이 있어
-// 패키지가 달라도 Bean 이름이 충돌한다(ConflictingBeanDefinitionException).
 @RestController("springBasic3MemoController")
 @RequestMapping("/study/spring-basic3/memos")
 public class MemoController {
